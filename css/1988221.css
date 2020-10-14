@@ -301,3 +301,30 @@ h4 {
     width: 100%;
     height: 400px;
 }
+
+/* Blog page */
+
+.list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.list li {
+    padding-bottom: 10px;
+    padding-left: 24px;
+    background: url(../images/marker1.png) 0 4px no-repeat;
+}
+
+.list a {
+    color: #7c7c7c;
+    text-decoration: none;
+}
+
+.list a:hover {
+    color: #73c926;
+}
+
+.blog,
+.clearfix {
+    clear: both;
+}
