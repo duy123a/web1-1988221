@@ -18,7 +18,7 @@
     <!--Header-->
     <header class="container">
         <nav class="navbar navbar-expand-sm navbar-light px-0">
-            <a class="navbar-brand" href="#" id="logo">
+            <a class="navbar-brand" href="index.html" id="logo">
                 <img src="images/logo.png" alt="logo-icecream">
             </a>
             <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#menu"
@@ -68,61 +68,22 @@
         <div class="row">
             <div class="col-md-9">
                 <h3 class="text-dark">Blog</h3>
-                <div id="blogs" class="my-4">
-                    <h4>Donec eu elit in nisi placerat</h4>
-                    <p>by Super User in <a href="#">Blog. Curabitur eu dignissim velit</a> on Tue, Feb 5, 2019, GMT+7 Hits: 210 <a href="#">Comments (3)</a></p>
-                    <div>
-                        <img src="images/blog/blog-thumb1.jpg" alt="" class="round-img pull-left img-thumbnail">
-                        <p>In neque arcu, vulputate vitae dignissim id, placerat adipiscing lorem. Nulla consectetur adipiscing metus vel pulvinar. Aenean molestie mauris non diam tincidunt faucibus. Integer odio dui, iaculis in congue eleifend, faucibus nec diam. Maecenas ac est odio, at dignissim dolor. Quisque gravida, purus vitae varius sagittis, odio erat venenatis nibh, eu interdum diam est eu sem. Vivamus luctus lectus sit amet lectus egestas cursus.</p>
-                        <a class="readmore" href="#">Read more</a>
-                    </div>
-                </div>
-                <div class="clearfix"></div>
-                <div id="blogs" class="my-4">
-                    <h4>Donec eu elit in nisi placerat</h4>
-                    <p>by Super User in <a href="#">Blog. Curabitur eu dignissim velit</a> on Tue, Feb 5, 2019, GMT+7 Hits: 210 <a href="#">Comments (3)</a></p>
-                    <div>
-                        <img src="images/blog/blog-thumb2.jpg" alt="" class="round-img pull-left img-thumbnail">
-                        <p>In neque arcu, vulputate vitae dignissim id, placerat adipiscing lorem. Nulla consectetur adipiscing metus vel pulvinar. Aenean molestie mauris non diam tincidunt faucibus. Integer odio dui, iaculis in congue eleifend, faucibus nec diam. Maecenas ac est odio, at dignissim dolor. Quisque gravida, purus vitae varius sagittis, odio erat venenatis nibh, eu interdum diam est eu sem. Vivamus luctus lectus sit amet lectus egestas cursus.</p>
-                        <a class="readmore" href="#">Read more</a>
-                    </div>
-                </div>
-                <div class="clearfix"></div>
-                <div id="blogs" class="my-4">
-                    <h4>Donec eu elit in nisi placerat</h4>
-                    <p>by Super User in <a href="#">Blog. Curabitur eu dignissim velit</a> on Tue, Feb 5, 2019, GMT+7 Hits: 210 <a href="#">Comments (3)</a></p>
-                    <div>
-                        <img src="images/blog/blog-thumb3.jpg" alt="" class="round-img pull-left img-thumbnail">
-                        <p>In neque arcu, vulputate vitae dignissim id, placerat adipiscing lorem. Nulla consectetur adipiscing metus vel pulvinar. Aenean molestie mauris non diam tincidunt faucibus. Integer odio dui, iaculis in congue eleifend, faucibus nec diam. Maecenas ac est odio, at dignissim dolor. Quisque gravida, purus vitae varius sagittis, odio erat venenatis nibh, eu interdum diam est eu sem. Vivamus luctus lectus sit amet lectus egestas cursus.</p>
-                        <a class="readmore" href="#">Read more</a>
-                    </div>
-                </div>
-                <div class="clearfix py-3" id="blogs-pagination">
+                <div id="blogs">
 
                 </div>
+                <div id="blogs-pagination"></div>
             </div>
             <div class="col-md-3 py-3">
                 <div>
                     <h3 class="text-dark pb-3">Categories</h3>
                     <ul class="list" id="blogs-categories">
-                        <li><a href="#">Donec eu elit in nisi</a></li>
-                        <li><a href="#">In neque arcu vulputate</a></li>
-                        <li><a href="#">Quisque gravida purus vitae</a></li>
-                        <li><a href="#">Vivamus luctus lectus sit</a></li>
-                        <li><a href="#">Vivamus congue turpis in augue</a></li>
-                        <li><a href="#">Curabitur eu dignissim velit</a></li>
+
                     </ul>
                 </div>
                 <div>
                     <h3 class="text-dark pb-3">Archives</h3>
                     <ul class="list" id="blogs-archives">
-                        <li><a href="#">Febuary, 2012</a></li>
-                        <li><a href="#">Septemper, 2016</a></li>
-                        <li><a href="#">January, 2017</a></li>
-                        <li><a href="#">April, 2017</a></li>
-                        <li><a href="#">June, 2018</a></li>
-                        <li><a href="#">May, 2019</a></li>
-                        <li><a href="#">November, 2019</a></li>
+
                     </ul>
                 </div>
             </div>
@@ -150,6 +111,192 @@
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/handlebars-v4.7.6.js"></script>
+    <script src="js/handlebars-pagination-helper.js"></script>
+    <script src="js/1988221.js"></script>
+    <script id="blogs-categories-template" type="text/x-handlebars-template">
+        {{#each data}}
+        <li><a href="#" onclick="loadBlogs('blogs/categories/{{id}}')">{{name}}</a></li>
+        {{/each}}
+    </script>
+    <script id="blogs-archives-template" type="text/x-handlebars-template">
+        {{#each data}}
+        <li><a href="#" onclick="loadBlogs('blogs/archives/{{month}}-{{year}}')">{{monthString}}, {{year}}</a></li>
+        {{/each}}
+    </script>
+    <script id="blogs-template" type="text/x-handlebars-template">
+        {{#each data.data}}
+        <div class="blog py-4">
+            <h4>{{name}}</h4>
+            <p>by {{author}} in <a href="#" onclick="loadBlogs('blogs/categories/{{categoryId}}')">Blog. {{category.name}}</a> on {{date}} Hits: 210 <a href="#"  onclick="loadDetails('{{id}}')">Comments ({{comments.length}})</a></p>
+            <div>
+                <img src="{{thumbpath}}" alt="" class="round-img pull-left img-thumbnail">
+                <p>{{summary}}</p>
+                <a class="readmore" href="#" onclick="loadDetails('{{id}}')">Read more</a>
+            </div>
+        </div>
+        {{/each}}
+    </script>
+    <script id="blogs-detail-template" type="text/x-handlebars-template">
+        {{#each data}}
+        <div class="blog py-4">
+            <h4>{{name}}</h4>
+            <p>by {{author}} in <a href="#">Blog. {{category.name}}</a> on {{date}} Hits: 210 <a href="#">Comments ({{comments.length}})</a></p>
+            <div>
+                <img src="{{thumbpath}}" alt="" class="round-img pull-left img-thumbnail">
+                {{{description}}}
+            </div>
+        </div>
+        <div class="py-3">
+            <h4 class="text-dark">Leave your comment</h4>
+            <h4 class="text-dark">Post comment as a guest</h4>
+            <form id="frm-comment" method="POST" onsubmit="return addComment()" data-blog-id="{{id}}">
+                <div class="row">
+                    <div class="form-group col">
+                      <label for="name">Name(required)</label>
+                      <input type="text" name="name" id="name" class="form-control form-control-sm" placeholder="" required>
+                    </div>
+                    <div class="form-group col">
+                        <label for="email">Email</label>
+                        <input type="text" name="email" id="email" class="form-control form-control-sm" placeholder="" required>
+                    </div>
+                    <div class="col"></div>
+                </div>
+                <div class="row">
+                    <div class="form-group col">
+                      <label for="comment"></label>
+                      <textarea class="form-control form-control-sm" name="comment" id="comment" rows="3" required></textarea>
+                    </div>
+                </div>
+                <div class="row m-0">
+                    <div class="form-check form-check-inline col">
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" name="agree" id="agree" value="false" required> Agree to Terms and Conditions
+                        </label>
+                    </div>
+                    <div class="col text-right">
+                        <button type="submit" class="btn btn-link btn-sm">Submit Comment</button>
+                    </div>
+                </div>
+            </form>
+            <div class="bg-dark text-uppercase p-1">Comments ({{comments.length}})</div>
+            {{#each comments}}
+                <div class="row">
+                    <div>
+                        <small><strong>{{name}}</strong> {{date}}</small>
+                    </div>
+                    <p>{{summary}}</p>
+                </div>
+                <hr>
+            {{/each}}
+        </div>
+        {{/each}}
+    </script>
+    <script id="blogs-pagination-template" type="text/x-handlebars-template">
+        {{#pagination currentPage pageCount size api}}
+            <nav aria-label="Page navigation" class="clearfix pt-3">
+                <ul class="pagination">
+                    {{#unless startFromFirstPage}}
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous" onclick="loadBlogs('{{api}}', 1)">
+                            1
+                        </a>
+                     </li>
+                    {{/unless}}
+                    {{#each pages}}
+                    {{#if isCurrent}}
+                    <li class="page-item active"><a class="page-link" href="#" onclick="loadBlogs('{{api}}', '{{page}}')">{{page}}</a></li>
+                    {{else}}
+                    <li class="page-item"><a class="page-link" href="#" onclick="loadBlogs('{{api}}', '{{page}}')">{{page}}</a></li>
+                    {{/if}}
+                    {{/each}}
+                    {{#unless endAtLastPage}}
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next" onclick="loadBlogs('{{api}}', '{{pageCount}}')">
+                            {{pageCount}}
+                        </a>
+                    </li>
+                    {{/unless}}
+                </ul>
+            </nav>
+        {{/pagination}}
+    </script>
+    <script>
+        $(document).ready(function () {
+            loadData('blogs-categories', '#blogs-categories', '#blogs-categories-template');
+            loadData('blogs-archives', '#blogs-archives', '#blogs-archives-template');
+            loadBlogs('blogs');
+        })
+
+        function loadBlogs(request, page = 1) {
+            loadData(request, '#blogs', '#blogs-template');
+            $.ajax({
+                url: `http://web1-api.herokuapp.com/api/${request}?page=${page}`,
+                cache: false,
+                success: function (data) {
+                    let jsonData = {
+                        data: data
+                    }
+                    let target = $('#blogs');
+                    let source = $('#blogs-template').html();
+                    let template = Handlebars.compile(source);
+                    $(target).html(template(jsonData));
+
+                    jsonData = {
+                        currentPage: page,
+                        size: 2,
+                        pageCount: data.pageCount,
+                        api: request
+                    }
+                    target = $('#blogs-pagination');
+                    source = $('#blogs-pagination-template').html();
+                    template = Handlebars.compile(source);
+                    $(target).html(template(jsonData));
+                }
+            });
+        }
+
+        function loadDetails(id) {
+            loadData(`blogs/${id}`, '#blogs', '#blogs-detail-template')
+        }
+
+        function addComment() {
+            let formData = {
+                name: $('#name').val(),
+                email: $('#email').val(),
+                comment: $('#comment').val(),
+                blogId: $('#frm-comment').data('blogId'),
+                agree: $('#agree').prop('checked'),
+            }
+            $.ajax({
+                url: "http://web1-api.herokuapp.com/users/authenticate",
+                dataType: "json",
+                type: "POST",
+                data: {
+                    username: 'test',
+                    password: '1c3cr3@m'
+                },
+                success: function (r) {
+                    $.ajax({
+                        url: "http://web1-api.herokuapp.com/users/comment",
+                        dataType: "json",
+                        type: "POST",
+                        headers: {
+                            "Authorization": 'Bearer ' + r.token
+                        },
+                        data: formData,
+                        success: function (r) {
+                            loadDetails(formData.blogId);
+                        },
+                        error: function(xhr, status, error) {
+                            window.alert(error);
+                        }
+                    });
+                }
+            });
+            return false;
+        }
+    </script>
 </body>
 
 </html>

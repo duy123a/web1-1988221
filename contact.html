@@ -18,7 +18,7 @@
     <!--Header-->
     <header class="container">
         <nav class="navbar navbar-expand-sm navbar-light px-0">
-            <a class="navbar-brand" href="#" id="logo">
+            <a class="navbar-brand" href="index.html" id="logo">
                 <img src="images/logo.png" alt="logo-icecream">
             </a>
             <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#menu"
@@ -100,22 +100,22 @@
                     <div class="col">
                         <div class="form-group">
                             <label for="name">Name *</label>
-                            <input type="text" name="name" id="name" class="form-control form-control-sm"
-                                placeholder="">
+                            <input type="text" name="name" id="name" class="form-control form-control-sm" placeholder=""
+                                required>
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-group">
                             <label for="email">Email *</label>
                             <input type="email" name="email" id="email" class="form-control form-control-sm"
-                                placeholder="">
+                                placeholder="" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-group">
                             <label for="subject">Subject *</label>
                             <input type="text" name="subject" id="subject" class="form-control form-control-sm"
-                                placeholder="">
+                                placeholder="" required>
                         </div>
                     </div>
                 </div>
@@ -158,6 +158,8 @@
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/handlebars-v4.7.6.js"></script>
+    <script src="js/1988221.js"></script>
     <script defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACo_Iy46kJ1I32FLv-r2udAJLZRYW_GLE&callback=initMap"></script>
     <script>
@@ -169,6 +171,40 @@
                 zoom: 18
             });
         }
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#form-contact').on('submit', function (e) {
+                e.preventDefault();
+                $.ajax({
+                    url: "http://web1-api.herokuapp.com/users/authenticate",
+                    dataType: "json",
+                    type: "POST",
+                    data: {
+                        username: 'test',
+                        password: '1c3cr3@m'
+                    },
+                    success: function (r) {
+                        var formData = $('#form-contact').serialize();
+                        $.ajax({
+                            url: "http://web1-api.herokuapp.com/users/send",
+                            dataType: "json",
+                            type: "POST",
+                            headers: {
+                                "Authorization": 'Bearer ' + r.token
+                            },
+                            data: formData,
+                            success: function (r) {
+                                window.alert(r.message);
+                            },
+                            error: function (xhr, status, error) {
+                                window.alert(error);
+                            }
+                        });
+                    }
+                })
+            })
+        })
     </script>
 </body>
 
